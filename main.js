@@ -27,7 +27,6 @@ var swiper = new Swiper(".mySwiper", {
   const chevronDown = document.querySelector('.bx-chevron-down');
   const chevronUp = document.querySelector('.bx-chevron-up');
 
-
 document.querySelector('.sortby').addEventListener('click', () => {
     let toggle = categories.classList.contains('show-categories');
     if (!toggle) {
@@ -41,3 +40,7 @@ document.querySelector('.sortby').addEventListener('click', () => {
         chevronUp.style.display = 'none';
      }
 })
+
+// footer date
+const currentYear = new Date().getFullYear();
+document.querySelector('.date').innerHTML = `${currentYear}`;
