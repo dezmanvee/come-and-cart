@@ -1,26 +1,4 @@
 
-//Swiper functionality
-var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 2,
-    spaceBetween: 30,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    //Break points for width wide screens
-    breakpoints: {
-        600: {
-            slidesPerView: 3
-        },
-        898: {
-            slidesPerView: 4
-        },
-        1024: {
-            slidesPerView: 5
-        }
-    }
-  });
-
   // Sortby button functionality
   const sortbyBtns = document.querySelectorAll('.sortby-btn');
   const categories = document.querySelector('.categories');
@@ -44,3 +22,28 @@ document.querySelector('.sortby').addEventListener('click', () => {
 // footer date
 const currentYear = new Date().getFullYear();
 document.querySelector('.date').innerHTML = `${currentYear}`;
+
+// ===================
+// Nav toggle functionality
+// =====================
+
+// variables
+const toggleBtn = document.querySelector('.toggle-btn');
+const overlay = document.querySelector('.overlay');
+const navItems = document.querySelector('.nav-items');
+const closeBtn = document.querySelector('.close-btn');
+
+let checker = overlay.classList.contains('show-overlay');
+toggleBtn.addEventListener('click', () => {
+    // if (!checker) {
+    //     overlay.classList.add('show-overlay');
+    //     // toggleBtn.style.display = 'none';
+    //     // closeBtn.style.display = 'block';
+    // }
+    // else{
+    //     overlay.classList.remove('show-overlay');
+    // }
+    // overlay.classList.toggle('show-overlay');
+})
+
+

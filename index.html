@@ -18,12 +18,14 @@
     <nav class="nav">
         <div class="nav-center">
             <span class="logo">come<span class="n">N</span>cart</span>
-            <ul class="nav-items">
-                <li class="nav-item"><a href="#home">home</a></li>
-                <li class="nav-item"><a href="#top-sales">top sales</a></li>
-                <li class="nav-item"><a href="#collection">our collection</a></li>
-                <li class="nav-item"><a href="#contact">contact us</a></li>
-            </ul>
+            <div class="overlay">
+                <ul class="nav-items">
+                    <li class="nav-item"><a href="#home">home</a></li>
+                    <li class="nav-item"><a href="#top-sales">top sales</a></li>
+                    <li class="nav-item"><a href="#collection">our collections</a></li>
+                    <li class="nav-item"><a href="#contact">contact us</a></li>
+                </ul>
+            </div>
             <div class="nav-btns">
                 <span class="nav-btn cart-btn">
                     <i class='bx bx-cart-alt'></i>
@@ -46,7 +48,7 @@
                 <h1>
                     grab upto 50% off on selected product
                 </h1>
-                <button class="primary-btn">buy now</button>
+                <button class="primary-btn"><a href="#collection">buy now</a></button>
             </div>
         </div>
     </header>
@@ -861,6 +863,29 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
+    <script>
+        //Swiper functionality
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 2,
+            spaceBetween: 30,
+            pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            },
+            //Break points for width wide screens
+            breakpoints: {
+                600: {
+                    slidesPerView: 3
+                },
+                850: {
+                    slidesPerView: 4
+                },
+                1024: {
+                    slidesPerView: 5
+                }
+            }
+        });
+    </script>
     <script src="main.js"></script>
 </body>
 </html>
