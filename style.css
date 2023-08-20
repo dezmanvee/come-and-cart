@@ -46,6 +46,7 @@ body{
     font-family: 'Roboto', sans-serif;
     color: var(--clr-Text);
     overflow-x: hidden;
+    letter-spacing: 1px;
 }
 a{
     color: var(--clr-Text)
@@ -124,32 +125,35 @@ a{
     -webkit-background-clip: text;
 
 }
+.close-btn{
+    position: fixed;
+    right: 0.5rem;
+    top: 0.75rem;
+}
 /* =======================
     Media Queries for width
     < 769px (Tablet Devices)
 ==========================
  */
 @media screen and (max-width: 768px){
-    .toggle-btn{
+    .toggle-btn,
+    .close-btn{
         display: inline-block;
-        transition: var(--transition);
+        
     }
     .overlay{
-        background: rgba(255,255,255,0.3);
-        background-color: yellowgreen;
+        background: rgba(0,0,0,.8);
         position: fixed;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
-        /* display: none; */
-        /* transform: translateY(-115%); */
+        width: 100%;
+        height: 100%;
+        transform: translateX(-100%);
         transition: var(--transition);
 
     }
     .show-overlay{
-        /* display: block; */
-        transform: translateY(0);
+        transform: translateX(0);
     }
     .nav-items{
         flex-direction: column;
@@ -159,12 +163,10 @@ a{
         top: 0;
         left: 0;
         right: 0;
-        padding: 0.5rem 1rem 2.5rem;
+        padding: 3.5rem 1.5rem 2.5rem;
     }
    
 }
-
-
 
 /* =======================
     Hero Section
@@ -242,6 +244,9 @@ a{
 }
 .swiper-ctn{
     margin: 0 auto;
+    background-color: rgba(228, 225, 225, 0.3);
+    padding: 0.25rem;
+    border-radius: 4px;
 }
  .product-img{
     max-width: 100%;
@@ -331,12 +336,37 @@ a{
  }
  /* =======================
     Media Queries for width
+    < 768px (Tablet Devices)
+==========================
+ */
+ @media screen and (max-width: 768px) {
+    .banner h1{
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+    .primary-btn {
+        font-size: 1.2rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+ }
+ /* =======================
+    Media Queries for width
     < 850px (Tablet Devices)
 ==========================
  */
 @media screen and (max-width: 850px){ 
     .hero{
         padding: 3rem;
+    }
+    .product h5{
+        font-size: 0.85rem;
+    }
+    .rating-price {
+        font-size: 1.1rem;
+    }
+    .rating{
+        font-size: 0.75rem;
     }
 }
 
@@ -417,6 +447,7 @@ a{
 .category:hover{
     transform: translateX(15%);
 }
+
 /* =======================
     Media Queries for width
     < 850px (Tablet Devices)
@@ -522,7 +553,6 @@ a{
     display: flex;
     flex-direction: column;
     font-size: 1.2rem;
-    /* background-color: blue; */
     border-radius: 1rem;
 }
 input, textarea{
@@ -609,6 +639,7 @@ footer a{
 .join-us .join{
     display: flex;
     gap: 2rem;
+    flex-wrap: wrap;
 }
 .join i{
     font-size: 1.4rem;
@@ -623,4 +654,313 @@ footer a{
 }
 .copyright p{
     font-size: 0.65rem;
+}
+@media screen and (max-width: 768px) {
+    .bottom-container{
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+    .aside h2{
+        font-size: 1.5rem;
+    }
+    .container-left h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .container-left p {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+    }
+    .contact-center{
+        height: auto;
+    }
+    input, textarea{
+        font-size: 0.9rem;
+    }
+    ::placeholder{
+        line-height: 1;
+    }
+    .container-left{
+        bottom: auto;
+    }
+    .contact{
+        margin-top: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* =======================
+    Media Queries for width
+    < 600px (Tablet Devices)
+==========================
+ */
+ @media screen and (max-width: 600px) {
+    .collection-ctn {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .contact-center {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    input[type=text],
+    input[type=email] {
+        width: 80%;
+    }
+    footer{
+        margin-top: 6rem;
+    }
+    .banner{
+        align-self: last baseline;
+    }
+    .product h5 {
+        font-size: 0.65rem;
+    }
+    .rating{
+        font-size: 0.6rem;
+    }
+
+ }
+ /* ======================
+    cart container
+    ======================
+  */
+
+  .cart-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+
+    z-index: -200;
+    visibility: hidden;
+  }
+  .show-cart-overlay{
+    z-index: 200;
+    visibility: visible;
+  }
+  .cart-ctn{
+    background: var(--clr-Background);
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 1rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    
+    transform: translateX(100%);
+    z-index: -210;
+
+}
+.show-cart-ctn{
+    transform: translateX(0);
+    z-index: 210;
+  }
+  .cart{
+    margin: 0 auto;
+  }
+  .cart h3{
+    text-align: center;
+  }
+  .product-in-cart{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 2rem;
+    align-items: center;
+  }
+  .product-in-cart-image{
+    width: 5rem;
+    height:5rem;
+    overflow: hidden;
+  }
+  .product-in-cart-image img{
+    width: 5rem;
+    height: 5rem;
+    display: block;
+    border-radius: 4px;
+  }
+  .product-in-cart-info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .button-ctn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .clear-cart-btn{
+    background: var(--clr-Background);
+    text-transform: capitalize;
+    border-radius: 1rem;
+  }
+  .product-in-cart-count{
+    display: flex;
+    gap: 1rem;
+}
+.product-in-cart-count .bx-minus,
+.product-in-cart-count .bx-plus{
+    cursor: pointer;
+    color: var(--clr-Primary);
+    font-weight: 550;
+  }
+  .product-in-cart-title{
+    font-size: 0.85rem;
+    font-weight: 550;
+  }
+  .remove{
+    font-size: 0.75rem;
+    color: var(--clr-Text-2);
+    cursor: pointer;
+  }
+  .remove:hover{
+    color: var(--clr-Primary)
+  }
+  
+  /* =======================
+  Product Details 
+  =======================
+  */
+  @media screen and (min-width: 1024px){
+    .cart-ctn{
+        width: 30vw;
+    }
+  }
+  .details-overlay-outer{
+    z-index: 140;
+    background: rgba(0,0,0,.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    transform: scale(0);
+    transition: var(--transition);
+}
+.show-details-overlay-outer{
+      transform: scale(1);
+  }
+ 
+.details-overlay{
+    position: fixed;
+    background: var(--clr-Background);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    border-radius: 1rem;
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+}
+.details-image-ctn{
+    overflow: hidden;
+    width: 15rem;
+}
+.details-image-ctn img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 1rem;
+}
+.details-ctn{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    justify-self: center;
+    align-self: center;
+}
+.details-info-ctn{
+    padding: 0 0.5rem;
+} 
+.details-info-ctn h3{
+    font-size: 1.3rem;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+.description-rating-ctn{
+    padding-bottom: 0.5rem;
+    border-bottom: 0.1px solid #e1e1e1;
+}
+.description-rating-ctn p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+.description-rating-ctn i{
+    font-size: 0.85rem;
+    color: var(--clr-Primary);
+}
+.description-rating-ctn span{
+    font-size: 0.75rem;
+}
+.details-info-ctn h4{
+    padding: 1rem 0;
+}
+.return-delivery-ctn{
+    padding: 0.5rem 0;
+    border: 1px solid #e1e1e1;
+}
+.delivery,
+.return {
+    display: flex;
+    gap: 0.25rem;
+}
+.return i,
+.delivery i{
+    color: #ffb121;
+}
+.return h6,
+.delivery h6{
+    text-transform: capitalize;
+    padding-bottom: 0.25rem;
+
+}
+.return p,
+.delivery p{
+    font-size: 0.65rem;
+}
+.return{
+    padding-bottom: 0.5rem;
+}
+.delivery{
+    padding-bottom: 0.5rem;
+    border-bottom: 0.1px solid #e1e1e1;
+}
+.go-back-btn{
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+    display: flex;
+}
+.go-back-btn i{
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+.go-back-btn span{
+    color: var(--clr-Text-2);
+    cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 1024px) {
+    .details-overlay{
+        height: 100vh;
+        width: 100%;
+        overflow-y: scroll;
+        border-radius: 0;
+    }
+    .details-ctn{
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .description-rating-ctn p{
+        padding-top: 0;
+    }
 }

@@ -27,23 +27,27 @@ document.querySelector('.date').innerHTML = `${currentYear}`;
 // Nav toggle functionality
 // =====================
 
-// variables
+// variables for nav toggle
 const toggleBtn = document.querySelector('.toggle-btn');
 const overlay = document.querySelector('.overlay');
-const navItems = document.querySelector('.nav-items');
 const closeBtn = document.querySelector('.close-btn');
+const navItems = document.querySelectorAll('.nav-item');
 
-let checker = overlay.classList.contains('show-overlay');
+//Show nav with toggle button
 toggleBtn.addEventListener('click', () => {
-    // if (!checker) {
-    //     overlay.classList.add('show-overlay');
-    //     // toggleBtn.style.display = 'none';
-    //     // closeBtn.style.display = 'block';
-    // }
-    // else{
-    //     overlay.classList.remove('show-overlay');
-    // }
-    // overlay.classList.toggle('show-overlay');
+    let checker = overlay.classList.contains('show-overlay');
+    if (!checker) {
+        overlay.classList.add('show-overlay');
+    }
+})
+//Hide nav with close button
+closeBtn.addEventListener('click', () => {
+    overlay.classList.remove('show-overlay');
 })
 
-
+//Hide nav with nav items
+navItems.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        overlay.classList.remove('show-overlay');
+    })
+})
