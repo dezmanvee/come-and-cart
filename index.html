@@ -17,7 +17,11 @@
     <!-- Nav start -->
     <nav class="nav">
         <div class="nav-center">
-            <span class="logo">come<span class="n">N</span>cart</span>
+            <span class="logo">
+                <a href="#home">
+                    <img src="./image/logo.png" alt="logo">
+                </a>
+            </span>
             <div class="overlay">
                 <ul class="nav-items">
                     <li class="nav-item"><a href="#home">home</a></li>
@@ -252,8 +256,11 @@
             </article>
             <!-- swiper End-->
         </div>
+        <div class="swiper-pagination"></div>
     </aside>
     <!-- Swiper Section End-->
+
+
     <section id="collection" class="collection">
         <div class="sortby-ctn">
             <button class="sortby product-btn">sort by 
@@ -735,7 +742,7 @@
         </div>
 
       <!-- PRODUCT DETAILS OVERLAY -->
-        <div class="details-overlay-outer show-details-overlay-outer">
+        <div class="details-overlay-outer">
             <div class="details-overlay">
                 <div class="go-back-btn">
                     <i class='bx bx-arrow-back'></i>
@@ -797,9 +804,14 @@
         <!-- CART OVERLAY -->
         <div class="cart-overlay">
             <!-- cart container -->
-            <div class="cart-ctn">
-                <div class="cart-close btn nav-btn">
-                    <i class='bx bx-x'></i>
+            <div class="cart-ctn show-cart-ctn">
+                <div class="cart-overlay-logo-ctn">
+                    <div class="logo-inner-ctn">
+                        <img src="./image/logo.png" alt="logo">
+                    </div>
+                    <div class="cart-close btn nav-btn">
+                        <i class='bx bx-x'></i>
+                    </div>
                 </div>
                 <div class="cart">
                     <h3>your cart</h3>
@@ -823,7 +835,7 @@
                         <!-- number of single product -->
                         <div class="product-in-cart-count">
                             <span><i class='bx bx-minus'></i></span>
-                            0
+                            <span class="amount">0</span>
                             <span><i class='bx bx-plus'></i></span>
                         </div>
                     </div>

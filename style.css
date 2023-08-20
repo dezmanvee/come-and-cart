@@ -115,8 +115,17 @@ a{
     display: flex;
     gap: 2rem;
 }
+.logo{
+    width: 12rem;
+    overflow: hidden;
+}
+.logo img{
+    width: 100%;
+    height: auto;
+    display: block;
+}
 
-.logo {
+/* .logo {
     font-family: 'Kanit', sans-serif;
     font-size: 1.7rem;
     line-height: 2.2;
@@ -124,7 +133,7 @@ a{
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 
-}
+} */
 .close-btn{
     position: fixed;
     right: 0.5rem;
@@ -140,6 +149,9 @@ a{
     .close-btn{
         display: inline-block;
         
+    }
+    .logo{
+        width: 8rem;
     }
     .overlay{
         background: rgba(0,0,0,.8);
@@ -740,6 +752,19 @@ footer a{
     z-index: 200;
     visibility: visible;
   }
+  .cart-overlay-logo-ctn{
+    display: flex;
+    justify-content: space-between;
+  }
+  .cart-overlay-logo-ctn .logo-inner-ctn{
+    width: 8rem;
+    overflow: hidden;
+    display: block;
+  }
+  .cart-overlay-logo-ctn img{
+    width: 100%;
+    height: auto;
+  }
   .cart-ctn{
     background: var(--clr-Background);
     position: fixed;
@@ -764,6 +789,9 @@ footer a{
   }
   .cart h3{
     text-align: center;
+    background:linear-gradient(90deg, #cc1919 0%, #915959 100%);
+    color: var(--clr-Accent-3);
+    border-radius: 0.5rem;
   }
   .product-in-cart{
     display: grid;
@@ -772,6 +800,7 @@ footer a{
     padding: 0.25rem 0.75rem;
     margin-bottom: 2rem;
     align-items: center;
+    border-bottom: 1px solid #acacac;
   }
   .product-in-cart-image{
     width: 5rem;
@@ -810,9 +839,16 @@ footer a{
     color: var(--clr-Primary);
     font-weight: 550;
   }
+  .product-in-cart-count .amount{
+    font-size: 0.85rem;
+  }
   .product-in-cart-title{
     font-size: 0.85rem;
     font-weight: 550;
+  }
+  .product-in-cart-price{
+    font-weight: 550;
+    font-size: 0.85rem;
   }
   .remove{
     font-size: 0.75rem;
@@ -827,11 +863,15 @@ footer a{
   Product Details 
   =======================
   */
-  @media screen and (min-width: 1024px){
+  @media screen and (min-width: 900px){
     .cart-ctn{
-        width: 30vw;
+        width: 40vw;
+    }
+    .cart-overlay-logo-ctn .logo-inner-ctn{
+        display: none;
     }
   }
+ 
   .details-overlay-outer{
     z-index: 140;
     background: rgba(0,0,0,.8);
@@ -911,6 +951,7 @@ footer a{
 .return {
     display: flex;
     gap: 0.25rem;
+    padding: 0.5rem;
 }
 .return i,
 .delivery i{
@@ -926,11 +967,7 @@ footer a{
 .delivery p{
     font-size: 0.65rem;
 }
-.return{
-    padding-bottom: 0.5rem;
-}
 .delivery{
-    padding-bottom: 0.5rem;
     border-bottom: 0.1px solid #e1e1e1;
 }
 .go-back-btn{
