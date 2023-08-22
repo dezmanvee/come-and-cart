@@ -14,9 +14,9 @@
     --clr-Accent-3: #faf9f9;     
 
     /* Container's Width Variables */
-    --ctn-width-bg: 80%;
-    --ctn-width-md: 90%;
-    --ctn-width-sm: 96%;
+    --ctn-width-bg: 80vw;
+    --ctn-width-md: 90vw;
+    --ctn-width-sm: 96vw;
 
     /* Transition Variables */
     --transition: all 0.3s ease-in-out;
@@ -240,10 +240,11 @@ a{
    =======================
  */
 .aside{
-    padding: 2rem;
+    padding: 2rem 0.25rem;
     margin-top: 4rem;
     position: relative;
     margin-bottom: 3rem;
+    overflow: hidden;
 }
 .aside h2{
     margin: 1rem;
@@ -256,9 +257,9 @@ a{
 }
 .swiper-ctn{
     margin: 0 auto;
-    background-color: rgba(228, 225, 225, 0.3);
     padding: 0.25rem;
     border-radius: 4px;
+    width: 100vw;
 }
  .product-img{
     max-width: 100%;
@@ -396,14 +397,16 @@ a{
     text-transform: capitalize;
     font-size: 1.5rem;
     font-weight: 600;
-    letter-spacing: 1.2px;
+    letter-spacing: var(--letter-spacing-header);
     line-height: 2.1;
 }
 .collection-ctn{
+    margin: 0 auto;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
+    max-width: 1170px;
 }
 .sortby-ctn{
     position: absolute;
@@ -489,6 +492,8 @@ a{
     padding: 2rem;
     border-radius: 1rem;
     height: 30rem;
+    width: 90vw;
+    max-width: 1170px;
 }
 .container-left{
     background: var(--clr-Secondary);
@@ -512,7 +517,7 @@ a{
     font-size: 2rem;
     margin-bottom: 2rem;
     line-height: 1.8;
-    letter-spacing: 1px;
+    letter-spacing: var(--letter-spacing-header);
     text-transform: capitalize;
 }
 .container-left p{
@@ -611,6 +616,7 @@ footer{
     display: flex;
     flex-direction: column;
     margin-top: 10rem;
+    max-width: 1170px;
 }
 footer a{
     color: var(--clr-Accent-3);
@@ -674,10 +680,12 @@ footer a{
     }
     .aside h2{
         font-size: 1.5rem;
+        letter-spacing: var(--letter-spacing-header);
     }
     .container-left h3 {
         font-size: 1.5rem;
         margin-bottom: 1rem;
+        letter-spacing: var(--letter-spacing-header);
     }
     .container-left p {
         font-size: 0.8rem;
@@ -792,6 +800,7 @@ footer a{
     background:linear-gradient(90deg, #cc1919 0%, #915959 100%);
     color: var(--clr-Accent-3);
     border-radius: 0.5rem;
+    letter-spacing: var(--letter-spacing-header);
   }
   .product-in-cart{
     display: grid;
@@ -858,14 +867,20 @@ footer a{
   .remove:hover{
     color: var(--clr-Primary)
   }
-  
+  .checkout-total{
+    text-align: center;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    font-weight: 550;
+  }
   /* =======================
   Product Details 
   =======================
   */
-  @media screen and (min-width: 900px){
+  @media screen and (min-width: 768px){
     .cart-ctn{
-        width: 40vw;
+        width: 30vw;
+        min-width: 450px;
     }
     .cart-overlay-logo-ctn .logo-inner-ctn{
         display: none;
