@@ -616,7 +616,7 @@ footer{
     display: flex;
     flex-direction: column;
     margin-top: 10rem;
-    max-width: 1170px;
+    /* max-width: 1170px; */
 }
 footer a{
     color: var(--clr-Accent-3);
