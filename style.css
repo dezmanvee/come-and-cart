@@ -125,15 +125,20 @@ a{
     display: block;
 }
 
-/* .logo {
-    font-family: 'Kanit', sans-serif;
-    font-size: 1.7rem;
-    line-height: 2.2;
-    background: linear-gradient(90deg, #cc1919 0%, #915959 100%);
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-
-} */
+.cart-btn{
+    position: relative;
+}
+.cart-count{
+    background: var(--clr-Primary);
+    color: var(--clr-Background);
+    padding: 0.25rem;
+    border-radius: 45%;
+    font-size: 0.85rem;
+    position: absolute;
+    top: -8px;
+    right: 0;
+    line-height: 0.8;
+}
 .close-btn{
     position: fixed;
     right: 0.5rem;
