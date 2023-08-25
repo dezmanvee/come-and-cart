@@ -11,6 +11,9 @@ const cartContent = document.querySelector('.cart-content');
 const cartOverlay = document.querySelector('.cart-overlay');
 const cartButton = document.querySelector('.cart-btn');
 const closeCart = document.querySelector('.cart-close');
+const detailsContainer = document.querySelector('.details-ctn');
+const detailsOverlay = document.querySelector('.details-overlay-outer');
+const detailsBackBtn = document.querySelector('.go-back-btn');
 
 
 document.querySelector(".sortby").addEventListener("click", () => {
@@ -178,7 +181,7 @@ function displayProducts(productsArr) {
                             <div class="image-ctn">
                                 <img src=${product.image} alt=${product.title} class="product-img">
                                 <div class="product-btns">
-                                    <span class="product-btn details">details</span>
+                                    <span class="product-btn details" data-id=${product.id}>details</span>
                                     <span class="product-btn add-to-cart" data-id=${product.id}>add to cart</span>
                                 </div>
                             </div>
@@ -198,6 +201,7 @@ function displayProducts(productsArr) {
 }
 
 function addToCartButton() {
+
   const addToCartBtns = [...document.querySelectorAll('.add-to-cart')]
     addToCartBtns.forEach(button => {
       const buttonId = button.dataset.id;
@@ -222,11 +226,77 @@ function addToCartButton() {
           cartCountAndPrice(cart);
           //display the cart item
           displayCartItem(cartItem);
+          //display cart count
+          cartCountDisplay(cart)
 
         })
       }
     })
 }
+
+function detailsButton() {
+
+  const detailsButtons = document.querySelectorAll('.details');
+  detailsButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const buttonId = e.target.dataset.id;
+      const productDetails = getProduct(buttonId);
+      const result = `<!-- image -->
+      <div class="details-image-ctn">
+          <img src=${productDetails.image} alt=${productDetails.title}>
+      </div>
+      <!-- info -->
+      <div class="details-info-ctn">
+          <h3>${productDetails.title}</h3>
+          <!-- description -->
+          <div class="description-rating-ctn">
+              <p>
+              ${productDetails.description}
+              </p>
+              <div>
+                  <i class='bx bxs-star'></i>
+                  <i class='bx bxs-star'></i>
+                  <i class='bx bxs-star'></i>
+                  <i class='bx bxs-star'></i>
+                  <i class='bx bxs-star'></i>
+                  <span>(121)</span>
+              </div>
+          </div>
+          <!-- price -->
+          <h4>$${productDetails.price}</h4>
+          <!-- return and delivery -->
+          <div class="return-delivery-ctn">
+              <!-- delivery -->
+              <div class="delivery">
+                  <div>
+                      <i class='bx bxs-truck'></i>
+                  </div>
+                  <div>
+                      <h6>free delivery</h6>
+                      <p>Enter your postal code for delivery avalaibility</p>
+                  </div>
+              </div>
+              <!-- return -->
+              <div class="return">
+                  <div>
+                      <i class='bx bxs-wallet'></i>
+                  </div>
+                  <div>
+                      <h6>return delivery</h6>
+                      <p>Free 30days delivery returns</p>
+                  </div>
+              </div>
+          </div>
+      </div>`
+      detailsContainer.innerHTML = result;
+      detailsOverlay.classList.add('show-details-overlay-outer')
+    })
+  })
+}
+
+detailsBackBtn.addEventListener('click', () => {
+  detailsOverlay.classList.remove('show-details-overlay-outer')
+})
 
 cartButton.addEventListener('click', () => {
   cartOverlay.classList.add('show-cart-overlay');
@@ -235,7 +305,6 @@ cartButton.addEventListener('click', () => {
 closeCart.addEventListener('click', () => {
   cartOverlay.classList.remove('show-cart-overlay');
 })
-
 
 
 function displayCartItem(item) {
@@ -278,6 +347,12 @@ function cartCountAndPrice (cartArr) {
   totalPrice.innerText = `${parseFloat(cartTotalPrice.toFixed(2))}`
 }
 
+function cartCountDisplay(cartArr) {
+  return cartArr.length > 0 ? cartCount.style.display = 'inline-block' :
+  cartCount.style.display = 'none';
+  
+}
+
 function saveProducts(productsArr) {
   localStorage.setItem("products", JSON.stringify(productsArr));
 }
@@ -292,10 +367,12 @@ function saveCart(cartArr) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  cartCountDisplay(cart);
   getProducts().then(products => {
     displayProducts(products);
     saveProducts(products);
   }).then(() => {
     addToCartButton()
+    detailsButton()
   })
 });
