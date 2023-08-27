@@ -788,6 +788,7 @@ footer a{
     padding: 1rem;
     overflow-x: hidden;
     overflow-y: scroll;
+    transition: var(--transition);
     
     transform: translateX(100%);
     z-index: -210;
@@ -831,6 +832,7 @@ footer a{
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    text-transform: capitalize;
   }
   .button-ctn{
     width: 100%;

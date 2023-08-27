@@ -4,17 +4,19 @@ const categories = document.querySelector(".categories");
 const chevronDown = document.querySelector(".bx-chevron-down");
 const chevronUp = document.querySelector(".bx-chevron-up");
 const collectionContainer = document.querySelector(".collection-ctn");
-const totalPrice = document.querySelector('.total-price');
-const cartCount = document.querySelector('.cart-count');
-const productInCartContainer = document.querySelector('.cart');
-const cartContent = document.querySelector('.cart-content');
-const cartOverlay = document.querySelector('.cart-overlay');
-const cartButton = document.querySelector('.cart-btn');
-const closeCart = document.querySelector('.cart-close');
-const detailsContainer = document.querySelector('.details-ctn');
-const detailsOverlay = document.querySelector('.details-overlay-outer');
-const detailsBackBtn = document.querySelector('.go-back-btn');
+const totalPrice = document.querySelector(".total-price");
+const cartCount = document.querySelector(".cart-count");
+const productInCartContainer = document.querySelector(".cart");
+const cartContent = document.querySelector(".cart-content");
+const cartOverlay = document.querySelector(".cart-overlay");
+const cartContainer = document.querySelector(".cart-ctn");
 
+const cartButton = document.querySelector(".cart-btn");
+const closeCart = document.querySelector(".cart-close");
+const detailsContainer = document.querySelector(".details-ctn");
+const detailsOverlay = document.querySelector(".details-overlay-outer");
+const detailsBackBtn = document.querySelector(".go-back-btn");
+const clearCartBtn = document.querySelector(".clear-cart-btn");
 
 document.querySelector(".sortby").addEventListener("click", () => {
   let toggle = categories.classList.contains("show-categories");
@@ -152,8 +154,9 @@ const client = contentful.createClient({
 //             .getProducts()
 //                 .then(products => comeNcartUi.displayProducts(products));
 //     })
-let cart = [];
 
+let cart = [];
+let allCartButtons = [];
 async function getProducts() {
   try {
     let entries = await client.getEntries({
@@ -201,178 +204,234 @@ function displayProducts(productsArr) {
 }
 
 function addToCartButton() {
+  const addToCartBtns = [...document.querySelectorAll(".add-to-cart")];
+  allCartButtons = addToCartBtns;
+  addToCartBtns.forEach((button) => {
+    const buttonId = button.dataset.id;
 
-  const addToCartBtns = [...document.querySelectorAll('.add-to-cart')]
-    addToCartBtns.forEach(button => {
-      const buttonId = button.dataset.id;
-      const inCart = cart.find(item => item.id === buttonId)
+    const inCart = cart.find((item) => item.id === buttonId);
 
-      if (inCart) {
-        button.innerText = 'in cart';
-        button.disabled = true;
-      }
-      else{
-        button.addEventListener('click', (e) => {
-          e.target.innerText = 'in cart';
-          e.target.disabled = true;
+    if (inCart) {
+      button.innerText = "in cart";
+      button.disabled = true;
+    }
+    button.addEventListener("click", (e) => {
+      e.currentTarget.disabled = true;
+      e.currentTarget.innerText = "in cart";
 
-          // get product from storage and add a new property, amount
-          const cartItem = {...getProduct(buttonId), amount: 1};
-          // add product to cart
-          cart = [...cart, cartItem]
-          // update the cart 
-          saveCart(cart);
-          //update the total price in cart and the total count
-          cartCountAndPrice(cart);
-          //display the cart item
-          displayCartItem(cartItem);
-          //display cart count
-          cartCountDisplay(cart)
+      // get product from storage and add a new property, amount
+      let cartItem = { ...getProduct(buttonId), amount: 1 };
+      // add product to cart
+      cart = [...cart, cartItem];
+      // update the cart
+      saveCart(cart);
+      //update the total price in cart and the total count
+      cartCountAndPrice(cart);
+      //display the cart item
+      displayCartItem(cartItem);
+      //display cart count
+      cartCountDisplay(cart);
+      //show cart
+      showCart()
+    });
+  });
+}
 
-        })
-      }
-    })
+function cartCountAndPrice(cartArr) {
+  let cartTotalPrice = 0;
+  let count = 0;
+  cartArr.map((item) => {
+    count += item.amount;
+    cartTotalPrice += item.price * item.amount;
+  });
+  cartCount.innerText = `${count}`;
+  totalPrice.innerText = `${parseFloat(cartTotalPrice.toFixed(2))}`;
+}
+
+function displayCartItem(item) {
+  let div = document.createElement("div");
+  div.setAttribute("class", "product-in-cart");
+  div.innerHTML = `<!-- image -->
+  <div class="product-in-cart-image">
+  <img src=${item.image} alt=${item.title}>
+  </div>
+  <!-- info -->
+  <div class="product-in-cart-info">
+  <div class="product-in-cart-title">
+  ${item.title}
+  </div>
+  <div class="product-in-cart-price">
+          $${item.price}
+          </div>
+          <div class="remove">
+          remove
+          <i class='bx bx-trash'></i>
+          </div>
+          </div>
+          <!-- number of single product -->
+          <div class="product-in-cart-count">
+          <span><i class='bx bx-minus'></i></span>
+      <span class="amount">${item.amount}</span>
+      <span><i class='bx bx-plus'></i></span>
+  </div>`;
+  cartContent.appendChild(div);
+}
+
+function showCart() {
+  cartButton.addEventListener("click", () => {
+    cartOverlay.classList.add("show-cart-overlay");
+    cartContainer.classList.add("show-cart-ctn");
+  });
+}
+
+function hideCart() {
+  closeCart.addEventListener("click", () => {
+    cartOverlay.classList.remove("show-cart-overlay");
+    cartContainer.classList.remove("show-cart-ctn");
+  });
+}
+
+function setupAPP() {
+  cart = getCart();
+  cartCountDisplay(cart);
+  cartCountAndPrice(cart);
+  populateCart();
+  showCart();
+  hideCart();
+}
+
+function populateCart() {
+  cart.forEach((cartItem) => displayCartItem(cartItem));
 }
 
 function detailsButton() {
-
-  const detailsButtons = document.querySelectorAll('.details');
-  detailsButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
+  const detailsButtons = document.querySelectorAll(".details");
+  detailsButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
       const buttonId = e.target.dataset.id;
       const productDetails = getProduct(buttonId);
       const result = `<!-- image -->
       <div class="details-image-ctn">
-          <img src=${productDetails.image} alt=${productDetails.title}>
+      <img src=${productDetails.image} alt=${productDetails.title}>
       </div>
       <!-- info -->
       <div class="details-info-ctn">
-          <h3>${productDetails.title}</h3>
-          <!-- description -->
-          <div class="description-rating-ctn">
-              <p>
-              ${productDetails.description}
-              </p>
-              <div>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <span>(121)</span>
+      <h3>${productDetails.title}</h3>
+      <!-- description -->
+      <div class="description-rating-ctn">
+      <p>
+      ${productDetails.description}
+      </p>
+      <div>
+      <i class='bx bxs-star'></i>
+      <i class='bx bxs-star'></i>
+      <i class='bx bxs-star'></i>
+      <i class='bx bxs-star'></i>
+      <i class='bx bxs-star'></i>
+      <span>(121)</span>
+      </div>
+      </div>
+      <!-- price -->
+      <h4>$${productDetails.price}</h4>
+      <!-- return and delivery -->
+      <div class="return-delivery-ctn">
+      <!-- delivery -->
+      <div class="delivery">
+      <div>
+      <i class='bx bxs-truck'></i>
+      </div>
+      <div>
+      <h6>free delivery</h6>
+      <p>Enter your postal code for delivery avalaibility</p>
+      </div>
+      </div>
+      <!-- return -->
+      <div class="return">
+      <div>
+      <i class='bx bxs-wallet'></i>
+      </div>
+      <div>
+      <h6>return delivery</h6>
+      <p>Free 30days delivery returns</p>
+                  </div>
               </div>
           </div>
-          <!-- price -->
-          <h4>$${productDetails.price}</h4>
-          <!-- return and delivery -->
-          <div class="return-delivery-ctn">
-              <!-- delivery -->
-              <div class="delivery">
-                  <div>
-                      <i class='bx bxs-truck'></i>
-                  </div>
-                  <div>
-                      <h6>free delivery</h6>
-                      <p>Enter your postal code for delivery avalaibility</p>
-                  </div>
-              </div>
-              <!-- return -->
-              <div class="return">
-                  <div>
-                      <i class='bx bxs-wallet'></i>
-                  </div>
-                  <div>
-                      <h6>return delivery</h6>
-                      <p>Free 30days delivery returns</p>
-                  </div>
-              </div>
-          </div>
-      </div>`
+          </div>`;
       detailsContainer.innerHTML = result;
-      detailsOverlay.classList.add('show-details-overlay-outer')
-    })
-  })
+      detailsOverlay.classList.add("show-details-overlay-outer");
+    });
+  });
 }
 
-detailsBackBtn.addEventListener('click', () => {
-  detailsOverlay.classList.remove('show-details-overlay-outer')
-})
-
-cartButton.addEventListener('click', () => {
-  cartOverlay.classList.add('show-cart-overlay');
-})
-
-closeCart.addEventListener('click', () => {
-  cartOverlay.classList.remove('show-cart-overlay');
-})
-
-
-function displayCartItem(item) {
-  const div = document.createElement('div');
-  div.setAttribute('class', 'product-in-cart');
-  div.innerHTML = `<!-- image -->
-  <div class="product-in-cart-image">
-      <img src=${item.image} alt=${item.title}>
-  </div>
-  <!-- info -->
-  <div class="product-in-cart-info">
-      <div class="product-in-cart-title">
-        ${item.title}
-      </div>
-      <div class="product-in-cart-price">
-          $${item.price}
-      </div>
-      <div class="remove">
-          remove
-          <i class='bx bx-trash'></i>
-      </div>
-  </div>
-  <!-- number of single product -->
-  <div class="product-in-cart-count">
-      <span><i class='bx bx-minus'></i></span>
-      <span class="amount">${item.amount}</span>
-      <span><i class='bx bx-plus'></i></span>
-  </div>`
-  cartContent.appendChild(div);
-}
-
-function cartCountAndPrice (cartArr) {
-  let cartTotalPrice = 0;
-  let count = 0;
-  cartArr.map(item => {
-    count += item.amount;
-    cartTotalPrice += item.price * item.amount
-  })
-  cartCount.innerText = `${count}`;
-  totalPrice.innerText = `${parseFloat(cartTotalPrice.toFixed(2))}`
-}
+detailsBackBtn.addEventListener("click", () => {
+  detailsOverlay.classList.remove("show-details-overlay-outer");
+});
 
 function cartCountDisplay(cartArr) {
-  return cartArr.length > 0 ? cartCount.style.display = 'inline-block' :
-  cartCount.style.display = 'none';
-  
+  return cartArr.length > 0
+    ? (cartCount.style.display = "inline-block")
+    : (cartCount.style.display = "none");
 }
 
 function saveProducts(productsArr) {
   localStorage.setItem("products", JSON.stringify(productsArr));
 }
 
+function getSpecificButton(cartItemId) {
+  return allCartButtons.find((button) => button.dataset.id === cartItemId);
+}
+
+function removeItem(cartItemId) {
+  cart = cart.filter((cartItem) => cartItem.id !== cartItemId);
+  saveCart(cart);
+  cartCountAndPrice(cart);
+  cartCountDisplay(cart);
+  let button = getSpecificButton(cartItemId);
+
+  button.disabled = false;
+  button.innerHTML = "add to cart";
+}
+
+function clearCart() {
+  let cartItemIds = cart.map((cartItem) => cartItem.id);
+  cartItemIds.forEach((cartItemId) => removeItem(cartItemId));
+
+  while (cartContent.children.length > 0) {
+    cartContent.removeChild(cartContent.children[0]);
+  }
+  cartOverlay.classList.remove("show-cart-overlay");
+  cartContainer.classList.remove("show-cart-ctn");
+}
+
+function cartLogic() {
+  clearCartBtn.addEventListener("click", clearCart);
+}
+
 function getProduct(id) {
-  const products = JSON.parse(localStorage.getItem('products'))
-  return products.find(product => product.id === id)
+  let products = JSON.parse(localStorage.getItem("products"));
+  return products.find((product) => product.id === id);
 }
 
 function saveCart(cartArr) {
-  localStorage.setItem('cart', JSON.stringify(cartArr));
+  localStorage.setItem("cart", JSON.stringify(cartArr));
+}
+
+function getCart() {
+  let cartItems = localStorage.getItem("cart");
+  return cartItems ? JSON.parse(cartItems) : [];
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  cartCountDisplay(cart);
-  getProducts().then(products => {
-    displayProducts(products);
-    saveProducts(products);
-  }).then(() => {
-    addToCartButton()
-    detailsButton()
-  })
+  setupAPP();
+
+  getProducts()
+    .then((products) => {
+      displayProducts(products);
+      saveProducts(products);
+    })
+    .then(() => {
+      addToCartButton();
+      detailsButton();
+      cartLogic();
+    });
 });
