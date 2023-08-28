@@ -276,7 +276,7 @@ function displayCartItem(item) {
   </div>`;
   cartContent.appendChild(div);
 }
-
+// show cart
 function showCart() {
   cartButton.addEventListener("click", () => {
     cartOverlay.classList.add("show-cart-overlay");
